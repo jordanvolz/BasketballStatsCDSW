@@ -1,4 +1,4 @@
-dbName = "jordan"
+dbName = "<Your User Name>"
 
 ## Create Spark Connection
 
