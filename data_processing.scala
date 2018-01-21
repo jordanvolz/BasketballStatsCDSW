@@ -1,3 +1,5 @@
+val dbName = "<Your User Name>"
+
 //********************
 //Copyright 2015 Cloudera (http://www.cloudera.com)
 //Authored by Jordan Volz (jordan.volz@cloudera.com)
@@ -351,8 +353,8 @@ dfPlayersT.registerTempTable("tPlayers")
 val dfPlayers=spark.sql("select age-min_age as exp,tPlayers.* from tPlayers join (select name,min(age)as min_age from tPlayers group by name) as t1 on tPlayers.name=t1.name order by tPlayers.name, exp ").repartition(sc.defaultParallelism)
 
 //save as table
-spark.sql("CREATE DATABASE IF NOT EXISTS basketball")
-dfPlayers.write.mode("overwrite").saveAsTable("basketball.Players")
+spark.sql(s"CREATE DATABASE IF NOT EXISTS $dbName")
+dfPlayers.write.mode("overwrite").saveAsTable(s"$dbName.Players")
 //filteredStats.unpersist()
 
 //********************
@@ -412,7 +414,7 @@ val pStats2=pStats1.flatMap{case(x,y)=>x}
 val dfAge=processStatsAgeOrExperience(pStats2, "age")
 
 //save as table
-dfAge.write.mode("overwrite").saveAsTable("basketball.age")
+dfAge.write.mode("overwrite").saveAsTable(s"$dbName.age")
 
 //extract out the experience list
 val pStats3=pStats1.flatMap{case(x,y)=>y}
@@ -421,6 +423,6 @@ val pStats3=pStats1.flatMap{case(x,y)=>y}
 val dfExperience=processStatsAgeOrExperience(pStats3,"Experience")
 
 //save as table
-dfExperience.write.mode("overwrite").saveAsTable("basketball.experience")
+dfExperience.write.mode("overwrite").saveAsTable(s"$dbName.experience")
 
 pStats1.unpersist()
