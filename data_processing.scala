@@ -27,7 +27,7 @@ if (!dirExists("/tmp/BasketballStatsWithYear/")){
   //process files so that each line includes the year
   for (i <- 1980 to 2017){
        println(i)
-       val yearStats = sc.textFile(s"/tmp/BasketballStats/leagues_NBA_$i*").repartition(sc.defaultParallelism)
+       val yearStats = sc.textFile(s"/tmp/BasketballStats/leagues_NBA_$i*").repartition(3)
        yearStats.filter(x => x.contains(",")).map(x =>  (i,x)).saveAsTextFile(s"/tmp/BasketballStatsWithYear/$i/")
   }
 }
