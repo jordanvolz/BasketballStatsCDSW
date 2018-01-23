@@ -65,3 +65,5 @@ pdPlayers[pdPlayers["name"] == 'Stephen Curry'][["age","nTOT"]].plot(kind='bar',
 ## The Best Seasons of All time???
 pdPlayers[['name','year','age','zTOT']].sort_values(by='zTOT',ascending=0)[:50]
 pdPlayers[['name','year','age','nTOT']].sort_values(by='nTOT',ascending=0)[:50]
+
+spark.stop()
